@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hipnosis — Diseño & Confección</title>
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100;200;300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #E24B4A;
+    --red-dim: rgba(226,75,74,0.5);
+    --red-faint: rgba(226,75,74,0.2);
+    --bg: #0e0e0e;
+    --bg2: #0a0a0a;
+    --card: #111111;
+    --border: rgba(226,75,74,0.12);
+    --white: #ffffff;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--white);
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* ── NAVBAR ── */
+  header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    transition: all 0.3s;
+  }
+
+  header.scrolled {
+    background: rgba(14,14,14,0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  nav {
+    max-width: 1152px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+  }
+
+  .nav-brand span {
+    color: var(--white);
+    font-size: 14px;
+    font-weight: 100;
+    letter-spacing: 0.3em;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: rgba(255,255,255,0.7);
+    text-decoration: none;
+    font-size: 11px;
+    font-weight: 300;
+    letter-spacing: 0.2em;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--white); }
+
+  .nav-cta {
+    border: 1px solid var(--red);
+    color: var(--red);
+    padding: 0.4rem 1.2rem;
+    font-size: 11px;
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+
+  .nav-cta:hover {
+    background: var(--red);
+    color: var(--white);
+  }
+
+  .hamburger {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    color: rgba(255,255,255,0.8);
+  }
+
+  .hamburger svg { display: block; }
+
+  .mobile-menu {
+    display: none;
+    background: rgba(14,14,14,0.98);
+    border-top: 1px solid var(--border);
+    padding: 1rem 1.5rem;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .mobile-menu.open { display: flex; }
+
+  .mobile-menu a {
+    color: rgba(255,255,255,0.7);
+    text-decoration: none;
+    font-size: 11px;
+    font-weight: 300;
+    letter-spacing: 0.25em;
+    padding: 0.5rem 0;
+    transition: color 0.2s;
+  }
+
+  .mobile-menu a:hover { color: var(--white); }
+
+  .mobile-cta {
+    display: inline-block;
+    border: 1px solid var(--red) !important;
+    color: var(--red) !important;
+    padding: 0.4rem 1.2rem;
+    margin-top: 0.5rem;
+  }
+
+  @media (max-width: 767px) {
+    .nav-links { display: none; }
+    .hamburger { display: block; }
+  }
+
+  /* ── HERO ── */
+  #inicio {
+    min-height: 100vh;
+    background: var(--bg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0 1rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-glow {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(226,75,74,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    max-width: 640px;
+    width: 100%;
+  }
+
+  .logo-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    filter: drop-shadow(0 0 8px rgba(226,75,74,0.7));
+  }
+
+  .logo-text-lg {
+    font-size: clamp(2rem, 8vw, 2.5rem);
+    font-weight: 100;
+    letter-spacing: 0.45em;
+    color: var(--white);
+    line-height: 1;
+  }
+
+  .logo-sub {
+    font-size: 11px;
+    font-weight: 300;
+    letter-spacing: 0.35em;
+    color: var(--red);
+  }
+
+  .hero-location {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .hero-location span {
+    color: rgba(255,255,255,0.6);
+    font-size: 11px;
+    font-weight: 300;
+    letter-spacing: 0.3em;
+    white-space: nowrap;
+  }
+
+  .divider-h { width: 2rem; height: 1px; background: var(--red-dim); }
+
+  .hero-tagline {
+    color: rgba(255,255,255,0.8);
+    font-size: clamp(1rem, 3vw, 1.3rem);
+    font-weight: 100;
+    letter-spacing: 0.15em;
+    line-height: 1.6;
+  }
+
+  .btn-hero {
+    margin-top: 1rem;
+    border: 1px solid var(--red);
+    color: var(--red);
+    padding: 0.875rem 2.5rem;
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 300;
+    letter-spacing: 0.25em;
+    text-decoration: none;
+    transition: all 0.3s;
+    box-shadow: 0 0 12px rgba(226,75,74,0.5), 0 0 28px rgba(226,75,74,0.2);
+    animation: glow-pulse 2.5s ease-in-out infinite;
+  }
+
+  .btn-hero:hover {
+    background: var(--red);
+    color: var(--white);
+  }
+
+  @keyframes glow-pulse {
+    0%, 100% { box-shadow: 0 0 12px rgba(226,75,74,0.5), 0 0 28px rgba(226,75,74,0.2); }
+    50% { box-shadow: 0 0 22px rgba(226,75,74,0.85), 0 0 44px rgba(226,75,74,0.35); }
+  }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1px;
+    height: 2.5rem;
+    background: rgba(255,255,255,0.2);
+  }
+
+  /* ── SECTIONS COMMON ── */
+  section { padding: 6rem 1.5rem; }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 300;
+    letter-spacing: 0.35em;
+    color: var(--red);
+    margin-bottom: 1rem;
+  }
+
+  .section-title {
+    font-size: clamp(1.5rem, 4vw, 2.2rem);
+    font-weight: 100;
+    letter-spacing: 0.3em;
+    color: var(--white);
+    text-align: center;
+  }
+
+  .section-head {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 4rem;
+  }
+
+  .red-line {
+    width: 3rem;
+    height: 1px;
+    background: var(--red);
+    margin-top: 1.5rem;
+  }
+
+  .max-w { max-width: 1152px; margin: 0 auto; }
+  .max-w-md { max-width: 768px; margin: 0 auto; }
+
+  /* ── SERVICES ── */
+  #servicios { background: var(--bg); }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+  }
+
+  @media (max-width: 1023px) { .services-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 639px) { .services-grid { grid-template-columns: 1fr; } }
+
+  .service-card {
+    background: var(--card);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    transition: background 0.2s;
+  }
+
+  .service-card:hover { background: #1a1a1a; }
+
+  .service-card .top-line {
+    width: 100%;
+    height: 1px;
+    background: var(--red);
+  }
+
+  .service-icon {
+    color: rgba(226,75,74,0.7);
+    transition: color 0.2s;
+  }
+
+  .service-card:hover .service-icon { color: var(--red); }
+
+  .service-name {
+    font-size: 12px;
+    font-weight: 300;
+    letter-spacing: 0.2em;
+    color: var(--white);
+  }
+
+  .service-desc {
+    font-size: 11px;
+    font-weight: 300;
+    letter-spacing: 0.05em;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.7;
+  }
+
+  /* ── GALLERY ── */
+  #galeria { background: var(--bg2); }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+  }
+
+  @media (max-width: 639px) { .gallery-grid { grid-template-columns: repeat(2, 1fr); } }
+
+  .gallery-item {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 3/4;
+    background: var(--card);
+  }
+
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.8;
+    transition: opacity 0.3s;
+  }
+
+  .gallery-item:hover img { opacity: 1; }
+
+  .gallery-item::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 1px solid var(--border);
+    transition: border-color 0.3s;
+    pointer-events: none;
+  }
+
+  .gallery-item:hover::after { border-color: rgba(226,75,74,0.3); }
+
+  .gallery-note {
+    text-align: center;
+    color: rgba(255,255,255,0.3);
+    font-size: 10px;
+    font-weight: 300;
+    letter-spacing: 0.2em;
+    margin-top: 2rem;
+  }
+
+  /* ── ABOUT ── */
+  #nosotros {
+    background: var(--bg);
+    text-align: center;
+  }
+
+  .about-text {
+    color: rgba(255,255,255,0.6);
+    font-size: 12px;
+    font-weight: 300;
+    letter-spacing: 0.08em;
+    line-height: 2;
+    max-width: 560px;
+    margin: 0 auto;
+  }
+
+  .about-stats {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+    flex-wrap: wrap;
+  }
+
+  .stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  .stat-icon {
+    font-size: 1.5rem;
+    font-weight: 100;
+    color: var(--red);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 10px;
+    font-weight: 300;
+    letter-spacing: 0.2em;
+    color: rgba(255,255,255,0.4);
+  }
+
+  .divider-v {
+    width: 1px;
+    height: 2.5rem;
+    background: var(--border);
+  }
+
+  /* ── CONTACT ── */
+  #contacto { background: var(--bg2); }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--border);
+    max-width: 640px;
+    margin: 0 auto;
+  }
+
+  @media (max-width: 639px) { .contact-grid { grid-template-columns: 1fr; } }
+
+  .contact-card {
+    background: var(--card);
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+
+  .contact-icon { color: var(--red); }
+
+  .contact-label {
+    font-size: 11px;
+    font-weight: 300;
+    letter-spacing: 0.2em;
+    color: var(--white);
+    margin-bottom: 0.75rem;
+  }
+
+  .contact-value {
+    font-size: 11px;
+    font-weight: 300;
+    letter-spacing: 0.05em;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.8;
+    text-decoration: none;
+  }
+
+  a.contact-value {
+    color: var(--red);
+    transition: color 0.2s;
+  }
+
+  a.contact-value:hover { color: var(--white); }
+
+  .contact-note {
+    font-size: 10px;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 0.05em;
+    margin-top: 0.25rem;
+  }
+
+  .contact-cta {
+    display: flex;
+    justify-content: center;
+    margin-top: 3rem;
+  }
+
+  .btn-contact {
+    border: 1px solid var(--red);
+    color: var(--red);
+    padding: 1rem 3rem;
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 300;
+    letter-spacing: 0.25em;
+    text-decoration: none;
+    transition: all 0.3s;
+  }
+
+  .btn-contact:hover {
+    background: var(--red);
+    color: var(--white);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+    padding: 2.5rem 1.5rem;
+  }
+
+  .footer-inner {
+    max-width: 1152px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .footer-copy {
+    color: rgba(255,255,255,0.3);
+    font-size: 11px;
+    font-weight: 300;
+    letter-spacing: 0.1em;
+    text-align: center;
+    flex: 1;
+  }
+
+  .footer-wa {
+    color: rgba(226,75,74,0.6);
+    font-size: 11px;
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-wa:hover { color: var(--red); }
+
+  /* ── FADE IN ── */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<header id="navbar">
+  <nav>
+    <a href="#inicio" class="nav-brand">
+      <svg viewBox="0 0 120 110" fill="none" xmlns="http://www.w3.org/2000/svg" width="24" height="24" aria-hidden="true">
+        <path d="M 60,55 m -52,0 a 52,52 0 1,1 104,0 a 52,52 0 0,1 -94,18" fill="none" stroke="#E24B4A" stroke-width="1" stroke-opacity="0.32" stroke-linecap="round"/>
+        <path d="M 60,55 m -40,0 a 40,40 0 1,1 80,0 a 40,40 0 0,1 -72,14" fill="none" stroke="#E24B4A" stroke-width="1" stroke-opacity="0.54" stroke-linecap="round"/>
+        <path d="M 60,55 m -28,0 a 28,28 0 1,1 56,0 a 28,28 0 0,1 -50,10" fill="none" stroke="#E24B4A" stroke-width="1.1" stroke-opacity="0.78" stroke-linecap="round"/>
+        <path d="M 60,55 m -17,0 a 17,17 0 1,1 34,0 a 17,17 0 0,1 -30,7" fill="none" stroke="#E24B4A" stroke-width="1.3" stroke-linecap="round"/>
+        <circle cx="60" cy="55" r="2.5" fill="#E24B4A"/>
+      </svg>
+      <span>HIPNOSIS</span>
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="#servicios">SERVICIOS</a></li>
+      <li><a href="#galeria">GALERÍA</a></li>
+      <li><a href="#nosotros">NOSOTROS</a></li>
+      <li><a href="#contacto">CONTACTO</a></li>
+      <li><a href="https://wa.me/543524416394" target="_blank" rel="noopener noreferrer" class="nav-cta">CONTACTANOS</a></li>
+    </ul>
+
+    <button class="hamburger" id="hamburger" aria-label="Abrir menú">
+      <svg id="icon-menu" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      <svg id="icon-close" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="display:none"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </nav>
+
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="#servicios" onclick="closeMobile()">SERVICIOS</a>
+    <a href="#galeria" onclick="closeMobile()">GALERÍA</a>
+    <a href="#nosotros" onclick="closeMobile()">NOSOTROS</a>
+    <a href="#contacto" onclick="closeMobile()">CONTACTO</a>
+    <a href="https://wa.me/543524416394" target="_blank" rel="noopener noreferrer" class="mobile-cta" onclick="closeMobile()">CONTACTANOS</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section id="inicio">
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+
+    <div class="logo-wrap">
+      <svg viewBox="0 0 120 110" fill="none" xmlns="http://www.w3.org/2000/svg" width="112" height="112" aria-hidden="true">
+        <path d="M 60,55 m -52,0 a 52,52 0 1,1 104,0 a 52,52 0 0,1 -94,18" fill="none" stroke="#E24B4A" stroke-width="0.9" stroke-opacity="0.32" stroke-linecap="round"/>
+        <path d="M 60,55 m -40,0 a 40,40 0 1,1 80,0 a 40,40 0 0,1 -72,14" fill="none" stroke="#E24B4A" stroke-width="0.9" stroke-opacity="0.54" stroke-linecap="round"/>
+        <path d="M 60,55 m -28,0 a 28,28 0 1,1 56,0 a 28,28 0 0,1 -50,10" fill="none" stroke="#E24B4A" stroke-width="1" stroke-opacity="0.78" stroke-linecap="round"/>
+        <path d="M 60,55 m -17,0 a 17,17 0 1,1 34,0 a 17,17 0 0,1 -30,7" fill="none" stroke="#E24B4A" stroke-width="1.2" stroke-linecap="round"/>
+        <circle cx="60" cy="55" r="2.5" fill="#E24B4A"/>
+      </svg>
+      <div class="logo-text-lg">HIPNOSIS</div>
+      <div class="logo-sub">DISEÑO &amp; CONFECCIÓN</div>
+    </div>
+
+    <div class="hero-location">
+      <div class="divider-h"></div>
+      <span>VILLA DEL TOTORAL · CÓRDOBA</span>
+      <div class="divider-h"></div>
+    </div>
+
+    <p class="hero-tagline">Diseño y confección a medida.</p>
+
+    <a href="https://wa.me/543524416394" target="_blank" rel="noopener noreferrer" class="btn-hero">CONTACTANOS</a>
+  </div>
+  <div class="hero-scroll"></div>
+</section>
+
+<!-- SERVICES -->
+<section id="servicios">
+  <div class="max-w">
+    <div class="section-head fade-in">
+      <span class="section-label">ESPECIALIDADES</span>
+      <h2 class="section-title">LO QUE HACEMOS</h2>
+      <div class="red-line"></div>
+    </div>
+
+    <div class="services-grid">
+
+      <div class="service-card fade-in">
+        <div class="top-line"></div>
+        <div class="service-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M20.38 3.46L16 2a4 4 0 01-8 0L3.62 3.46a2 2 0 00-1.34 2.23l.58 3.57a1 1 0 00.99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 002-2V10h2.15a1 1 0 00.99-.84l.58-3.57a2 2 0 00-1.34-2.23z"/></svg>
+        </div>
+        <div class="service-name">UNIFORMES ESCOLARES</div>
+        <div class="service-desc">Confección a medida de uniformes para colegios e instituciones educativas.</div>
+      </div>
+
+      <div class="service-card fade-in" style="transition-delay:0.05s">
+        <div class="top-line"></div>
+        <div class="service-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <div class="service-name">VESTIDOS DE 15</div>
+        <div class="service-desc">Diseños únicos para el día más especial, elaborados con atención al detalle.</div>
+      </div>
+
+      <div class="service-card fade-in" style="transition-delay:0.1s">
+        <div class="top-line"></div>
+        <div class="service-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-1.54-.39-2.99-1.07-4.26"/><path d="M12 3c1.66 0 3 4.03 3 9s-1.34 9-3 9-3-4.03-3-9 1.34-9 3-9"/><path d="M3 12h18"/><path d="M18.36 5.64l-2.83 2.83"/></svg>
+        </div>
+        <div class="service-name">VESTIDOS DE FIESTA</div>
+        <div class="service-desc">Prendas elegantes y personalizadas para cada ocasión especial.</div>
+      </div>
+
+      <div class="service-card fade-in" style="transition-delay:0.15s">
+        <div class="top-line"></div>
+        <div class="service-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+        </div>
+        <div class="service-name">VESTIDOS DE NOVIA</div>
+        <div class="service-desc">Trajes nupciales confeccionados a medida para el día que soñaste.</div>
+      </div>
+
+      <div class="service-card fade-in" style="transition-delay:0.2s">
+        <div class="top-line"></div>
+        <div class="service-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
+        </div>
+        <div class="service-name">VENTA DE TELAS Y MERCERÍA</div>
+        <div class="service-desc">Amplio stock de telas y materiales de confección de calidad.</div>
+      </div>
+
+      <div class="service-card fade-in" style="transition-delay:0.25s">
+        <div class="top-line"></div>
+        <div class="service-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg>
+        </div>
+        <div class="service-name">ARREGLOS DE ROPA</div>
+        <div class="service-desc">Ajustes y reparaciones para que cada prenda te quede perfecta.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="galeria" style="background:var(--bg2)">
+  <div class="max-w">
+    <div class="section-head fade-in">
+      <span class="section-label">PORTFOLIO</span>
+      <h2 class="section-title">NUESTRO TRABAJO</h2>
+      <div class="red-line"></div>
+    </div>
+
+    <div class="gallery-grid fade-in">
+      <!-- Slot 1 — reemplazar src con foto real -->
+      <div class="gallery-item"><img src="https://placehold.co/600x800/161616/333333?text=+" alt="Trabajo 1 — Hipnosis Diseño & Confección" loading="lazy"/></div>
+      <!-- Slot 2 -->
+      <div class="gallery-item"><img src="https://placehold.co/600x800/141414/2a2a2a?text=+" alt="Trabajo 2 — Hipnosis Diseño & Confección" loading="lazy"/></div>
+      <!-- Slot 3 -->
+      <div class="gallery-item"><img src="https://placehold.co/600x800/111111/303030?text=+" alt="Trabajo 3 — Hipnosis Diseño & Confección" loading="lazy"/></div>
+      <!-- Slot 4 -->
+      <div class="gallery-item"><img src="https://placehold.co/600x800/131313/2e2e2e?text=+" alt="Trabajo 4 — Hipnosis Diseño & Confección" loading="lazy"/></div>
+      <!-- Slot 5 -->
+      <div class="gallery-item"><img src="https://placehold.co/600x800/161616/282828?text=+" alt="Trabajo 5 — Hipnosis Diseño & Confección" loading="lazy"/></div>
+      <!-- Slot 6 -->
+      <div class="gallery-item"><img src="https://placehold.co/600x800/121212/323232?text=+" alt="Trabajo 6 — Hipnosis Diseño & Confección" loading="lazy"/></div>
+    </div>
+
+    <p class="gallery-note fade-in">PRÓXIMAMENTE MÁS TRABAJOS</p>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="nosotros">
+  <div class="max-w-md">
+    <div class="section-head fade-in">
+      <span class="section-label">NOSOTROS</span>
+      <h2 class="section-title">EL TALLER</h2>
+      <div class="red-line"></div>
+    </div>
+
+    <p class="about-text fade-in">
+      Somos un taller familiar con años de experiencia en confección, diseño y arreglos de ropa.
+      Trabajamos con dedicación para que cada prenda quede perfecta.
+    </p>
+
+    <div class="about-stats fade-in">
+      <div class="stat">
+        <span class="stat-icon">+</span>
+        <span class="stat-label">AÑOS DE EXPERIENCIA</span>
+      </div>
+      <div class="divider-v"></div>
+      <div class="stat">
+        <span class="stat-icon">∞</span>
+        <span class="stat-label">DISEÑOS A MEDIDA</span>
+      </div>
+      <div class="divider-v"></div>
+      <div class="stat">
+        <span class="stat-icon">♡</span>
+        <span class="stat-label">ATENCIÓN PERSONAL</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contacto" style="background:var(--bg2)">
+  <div class="max-w">
+    <div class="section-head fade-in">
+      <span class="section-label">UBICACIÓN &amp; CONTACTO</span>
+      <h2 class="section-title">ENCONTRANOS</h2>
+      <div class="red-line"></div>
+    </div>
+
+    <div class="contact-grid fade-in">
+      <div class="contact-card">
+        <div class="contact-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <div>
+          <p class="contact-label">UBICACIÓN</p>
+          <p class="contact-value">Villa del Totoral — Recibimos clientes y trabajos de Jesús María y Córdoba. Entregamos vestidos en Jesús María y Córdoba.</p>
+        </div>
+      </div>
+
+      <div class="contact-card">
+        <div class="contact-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+        </div>
+        <div>
+          <p class="contact-label">WHATSAPP</p>
+          <a href="https://wa.me/543524416394" target="_blank" rel="noopener noreferrer" class="contact-value">3524416394</a>
+          <p class="contact-note">Consultanos sin compromiso</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-cta fade-in">
+      <a href="https://wa.me/543524416394" target="_blank" rel="noopener noreferrer" class="btn-contact">ESCRIBINOS POR WHATSAPP</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <svg viewBox="0 0 120 110" fill="none" xmlns="http://www.w3.org/2000/svg" width="20" height="20" aria-hidden="true">
+      <path d="M 60,55 m -52,0 a 52,52 0 1,1 104,0 a 52,52 0 0,1 -94,18" fill="none" stroke="#E24B4A" stroke-width="1" stroke-opacity="0.5" stroke-linecap="round"/>
+      <path d="M 60,55 m -40,0 a 40,40 0 1,1 80,0 a 40,40 0 0,1 -72,14" fill="none" stroke="#E24B4A" stroke-width="1" stroke-opacity="0.6" stroke-linecap="round"/>
+      <path d="M 60,55 m -28,0 a 28,28 0 1,1 56,0 a 28,28 0 0,1 -50,10" fill="none" stroke="#E24B4A" stroke-width="1.1" stroke-linecap="round"/>
+      <path d="M 60,55 m -17,0 a 17,17 0 1,1 34,0 a 17,17 0 0,1 -30,7" fill="none" stroke="#E24B4A" stroke-width="1.3" stroke-linecap="round"/>
+      <circle cx="60" cy="55" r="2.5" fill="#E24B4A"/>
+    </svg>
+    <p class="footer-copy">&copy; 2026 Hipnosis — Diseño &amp; Confección. Villa del Totoral, Córdoba.</p>
+    <a href="https://wa.me/543524416394" target="_blank" rel="noopener noreferrer" class="footer-wa">WHATSAPP</a>
+  </div>
+</footer>
+
+<script>
+  // Navbar scroll
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 40);
+  }, { passive: true });
+
+  // Mobile menu
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const iconMenu = document.getElementById('icon-menu');
+  const iconClose = document.getElementById('icon-close');
+
+  hamburger.addEventListener('click', () => {
+    const open = mobileMenu.classList.toggle('open');
+    iconMenu.style.display = open ? 'none' : 'block';
+    iconClose.style.display = open ? 'block' : 'none';
+  });
+
+  function closeMobile() {
+    mobileMenu.classList.remove('open');
+    iconMenu.style.display = 'block';
+    iconClose.style.display = 'none';
+  }
+
+  // Fade in on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
